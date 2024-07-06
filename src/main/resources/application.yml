@@ -1,12 +1,3 @@
-keycloak:
-  realm: quickstart
-  auth-server-url: http://localhost:8180/auth
-  resource: authz-servlet
-  credentials:
-    secret: secret
-  public-client: false
-  confidential-port: 0
-
 spring:
   security:
     oauth2:

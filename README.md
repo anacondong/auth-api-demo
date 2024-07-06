@@ -33,3 +33,41 @@ Build and Run the Quickstart
    mvn spring-boot:run
 
    ````
+
+Test Access
+-------------------------------
+
+```shell
+curl -X POST http://localhost:8180/realms/quickstart/protocol/openid-connect/token -H 'content-type: application/x-www-form-urlencoded' -d 'client_id=authz-servlet&client_secret=secret' -d 'username=jdoe&password=jdoe&grant_type=password'
+```
+
+```shell
+curl -X POST http://localhost:8180/realms/quickstart/protocol/openid-connect/token -H 'content-type: application/x-www-form-urlencoded' -d 'client_id=authz-servlet&client_secret=secret' -d 'username=alice&password=alice&grant_type=password'
+```
+
+You should be able to obtain tokens for any of these users:
+
+| Username | Password | Roles        |
+|----------|----------|--------------|
+| jdoe     | jdoe     | user_premium |
+| alice    | alice    | user         |
+
+
+Verify Access
+-------------------------------
+
+```shell
+-----curl --location --request GET 'http://localhost:8080/' \
+--header Authorization: Bearer xxxxxxx
+```
+
+```shell
+-----curl --location --request GET 'http://localhost:8080/protected/premium' \
+--header Authorization: Bearer xxxxxxx
+```
+
+References
+--------------------
+* [Spring OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
+* [Keycloak Authorization Services](https://www.keycloak.org/docs/latest/authorization_services/)
+* [Keycloak Documentation](https://www.keycloak.org/documentation)
