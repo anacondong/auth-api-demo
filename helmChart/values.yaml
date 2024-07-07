@@ -1,0 +1,38 @@
+# values.yaml
+app:
+  name: authapidemo
+  namespace: dev
+
+replicaCount: 1
+
+image:
+  repository: anacondong/auth-api-demo
+  tag: latest
+  pullPolicy: Always
+
+deployment:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: authapidemo
+    tag: latest
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+service:
+  name: authapidemoservice
+  enabled: true
+  type: ClusterIP
+  port: 8080
+  targetPort: http
+
+configMap:
+  name: authapidemo-properties
+  data:
+    application.name: "auth-api-demo"
+    application.version: "1.0.0"

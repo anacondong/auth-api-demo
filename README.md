@@ -71,3 +71,26 @@ References
 * [Spring OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
 * [Keycloak Authorization Services](https://www.keycloak.org/docs/latest/authorization_services/)
 * [Keycloak Documentation](https://www.keycloak.org/documentation)
+
+
+K8s deployment
+--------------------
+
+docker build -t auth-api-demo .
+docker login -u xxx -p xxx  << do login to my dockerHub
+docker tag auth-api-demo anacondong/auth-api-demo
+docker push anacondong/auth-api-demo
+
+## Deploy to k8s
+cd helmChart
+helm template release-authapidemo ./helmChart -f ./helmChart/values.yaml > ./helmChart/manifest.yaml
+
+helm template release-authapidemo ./helmChart -f ./helmChart/values.yaml  << Generate yaml at console
+helm install authapidemo ./helmChart --values ./helmChart/values.yaml   <<< Install and run k8s
+helm delete authapidemo
+## Apply k8s
+kubectl get services
+kubectl apply -f ./helmChart/manifest.yaml
+kubectl port-forward service/authapidemoservice 8080:8080
+
+kubectl delete -f ./helmChart/manifest.yaml
