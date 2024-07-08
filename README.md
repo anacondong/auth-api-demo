@@ -23,7 +23,7 @@ You should be able to access your Keycloak Server at http://localhost:8180.
 
 Log in as the admin user to access the Keycloak Administration Console. Username should be `admin` and password `admin`.
 
-Import the [realm configuration file](config/realm-import.json) to create a new realm called `quickstart`.
+Import the [realm configuration file](keycloak-config/realm-import.json) to create a new realm called `quickstart`.
 For more details, see the Keycloak documentation about how to [create a new realm](https://www.keycloak.org/docs/latest/server_admin/index.html#_create-realm).
 
 Build and Run the Quickstart
@@ -71,6 +71,17 @@ References
 * [Spring OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
 * [Keycloak Authorization Services](https://www.keycloak.org/docs/latest/authorization_services/)
 * [Keycloak Documentation](https://www.keycloak.org/documentation)
+
+
+Docker container
+--------------------
+docker network create mynetwork
+docker run --name keycloak --network=mynetwork -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.0.0 start-dev --http-port=8180
+
+keycloak.auth-server-url=http://keycloak:8180/auth
+
+docker build -t anacondong/auth-api-demo .
+docker run --name auth-api-demo --network=mynetwork -p 8080:8080 anacondong/auth-api-demo
 
 
 K8s deployment
