@@ -5,6 +5,15 @@ spring:
         jwt:
           jwk-set-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/quickstart/protocol/openid-connect/certs
 
+keycloak:
+  realm: quickstart
+  auth-server-url: ${KEYCLOAK_URL_AUTH:http://localhost:8180/auth}
+  resource: authz-servlet
+  credentials:
+    secret: secret
+  public-client: false
+  confidential-port: 0
+
 config:
   auth:
     server:  ${KEYCLOAK_URL:http://localhost:8180}

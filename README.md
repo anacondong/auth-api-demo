@@ -19,6 +19,7 @@ Starting and Configuring the Keycloak Server
 docker run --name keycloak -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin --network=host quay.io/keycloak/keycloak:21.0.0 start-dev --http-port=8180
 ```
 
+
 You should be able to access your Keycloak Server at http://localhost:8180.
 
 Log in as the admin user to access the Keycloak Administration Console. Username should be `admin` and password `admin`.
@@ -76,13 +77,13 @@ References
 Docker container
 --------------------
 docker network create mynetwork
-docker run --name keycloak --network=mynetwork -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:21.0.0 start-dev --http-port=8180
 
-keycloak.auth-server-url=http://keycloak:8180/auth
+docker run --name keycloak --network=mynetwork -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -p 8180:8180 quay.io/keycloak/keycloak:21.0.0 start-dev --http-port=8180
+
 
 docker build -t anacondong/auth-api-demo .
-docker run --name auth-api-demo --network=mynetwork -p 8080:8080 anacondong/auth-api-demo
 
+docker run --name auth-api-demo --network=mynetwork -p 8080:8080 -e KEYCLOAK_URL_AUTH=http://keycloak:8180/auth -e KEYCLOAK_URL=http://keycloak:8180 -e "keycloak.auth-server-url=http://keycloak:8180/auth" anacondong/auth-api-demo
 
 K8s deployment
 --------------------

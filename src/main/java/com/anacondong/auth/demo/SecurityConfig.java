@@ -30,8 +30,6 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
     String jwkSetUri;
 
-    @Value("${config.auth.server: http://localhost:8180}")
-    String authServer;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -49,7 +47,7 @@ public class SecurityConfig {
 
         try {
             config = JsonSerialization.readValue(getClass().getResourceAsStream("/policy-enforcer.json"), PolicyEnforcerConfig.class);
-            config.setAuthServerUrl(authServer);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
